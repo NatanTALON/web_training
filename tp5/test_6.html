@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>test_6</title>
+    <script>
+		var timer;
+		var canvas = document.createElement('canvas');
+		var context = canvas.getContext('2d');
+		var img = new Image();
+		var sprite = 0;
+		
+		function init() {
+			document.body.appendChild(canvas);
+			img.src = './images/coin-sprite-animation.png';
+
+			timer = window.requestAnimationFrame(move);
+		}
+		
+		function move() {
+			sprite++;
+			if (sprite >= 10) { sprite = 0; }
+			context.clearRect(0,0,100,100);
+			context.drawImage(img,sprite*100,0,100,100,0,0,100,100);
+			window.requestAnimationFrame(move);
+		}
+		
+    </script>
+  </head>
+  <body onload='init()'>
+    <!-- page content -->
+  </body>
+</html>
