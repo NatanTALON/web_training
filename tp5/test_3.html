@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>test_2</title>
+    <script>
+    	var pos = 0;
+		var timer;
+		var canvas = document.createElement('canvas');
+		var context = canvas.getContext('2d');
+		var dir = 'droite';
+		
+		function init() {
+			canvas.width = 1000;
+			document.body.appendChild(canvas);
+			context.fillStyle = 'red';
+			// Move the element 10px on the right every 16ms
+			timer = window.requestAnimationFrame(move);
+		}
+		
+		function move() {
+			//temporisation pour simuler du calcul
+			context.clearRect(pos, 10, 50, 50);
+			if (dir === 'droite') {
+				pos+=10;
+				if (pos+100 >= 500) { dir = 'gauche' }
+			} else {
+				pos-=10;
+				if (pos <= 0) { dir = 'droite' }
+			}
+			context.fillRect(pos, 10, 50, 50);
+			window.requestAnimationFrame(move);
+		}
+		
+    </script>
+  </head>
+  <body onload='init()'>
+    <!-- page content -->
+  </body>
+</html>
