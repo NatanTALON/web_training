@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Events </title>
+    </head>
+    <body>
+    	<canvas id='canvas' width=1000 height=1000 />
+    </body>
+	<script>
+		var dir = 2;
+		var arrayMove = [false,false,false,false];
+		var posX = 0;
+		var posY = 0;
+		var moving = [0,0,0,0]
+		var moveTo = -1;
+		var canvas = document.getElementById('canvas');
+		var context = canvas.getContext('2d');
+		var img = new Image();
+		
+		img.src = './hero.png';
+		img.addEventListener("load", function() {
+				context.drawImage(img,128,256,128,128,posX,posY,128,128);
+				window.requestAnimationFrame(move); 
+			}, false);
+			
+		window.addEventListener("keydown", keydownCatcher, true);
+		window.addEventListener("mousedown", mouseCatcher, false);
+		
+		
+		
+		function keydownCatcher(event) {
+			if (event.defaultPrevented) { return; }
+			
+			moveTo = -1;
+  			switch (event.key) {
+    			case "ArrowDown":
+      				arrayMove[2] = true;
+      				break;
+    			case "ArrowUp":
+      				arrayMove[3] = true;
+      				break;
+    			case "ArrowLeft":
+      				arrayMove[0] = true;
+      				break;
+    			case "ArrowRight":
+      				arrayMove[1] = true;
+      				break;
+    			case "Enter":
+      				// Do something for "enter" or "return" key press.
+      				break;
+    			case "Escape":
+      				// Do something for "esc" key press.
+      				break;
+    			default:
+      				return; // Quit when this doesn't handle the key event.
+  			}
+  			// Consume the event for suppressing "double action".
+  			event.preventDefault();
+		}
+		
+		function mouseCatcher(event) {
+			moveTo = event.clientX;
+			if (moveTo > posX) { dir = 1 };
+			if (moveTo < posX) { dir = 0 };
+		}
+		
+		
+		function move() {
+			clear();
+			update();
+			draw();
+			
+			window.requestAnimationFrame(move);
+		}
+		
+		function clear() {
+			context.clearRect(posX,posY,128,128);
+		}
+		
+		function update() {
+			let i = 0;
+			while (i < 4 && !arrayMove[i]) {
+				i++;
+			}
+			
+			if (i < 4) {
+				dir = i;
+				arrayMove[dir] = false;
+				moving = [0,0,0,0];
+				moving[dir] = 1;
+			} else if (moving[dir] != 0 || moveTo != -1) {
+				moving[dir] = (moving[dir]+1)%28;
+				switch (dir) {
+					case 0:
+						if (posX > 2) { posX-=2; }
+						if (moveTo > 0 && posX < moveTo) { moveTo = -1; }
+						break;
+					case 1:
+						if (posX < 800) { posX+=2; }
+						if (moveTo > 0 && posX+128 > moveTo) { moveTo = -1; }
+						break;
+					case 2:
+						if (posY < 800) { posY+=2; }
+						break;
+					case 3:
+						if (posY > 2) { posY-=2; }
+						break;
+				}
+			}
+		}
+		
+		function draw() {
+			if (dir < 2) {
+				context.drawImage(img,(Math.floor(moving[dir]/7)*128)%512,dir*128,128,128,posX,posY,128,128);
+			} else if (dir < 4) {
+				context.drawImage(img,(Math.floor(moving[dir]/7)*128+128)%512,dir*128,128,128,posX,posY,128,128);
+			}
+		}
+		
+    </script>
+</html>
