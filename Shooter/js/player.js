@@ -54,7 +54,7 @@ var player = {
                     }
                     if(keycode == keys.DOWN) {
                         this.y += this.ySpeed;
-                        if(this.y>ArenaWidth-this.width) this.x=ArenaWidth-this.width;
+                        if(this.y>ArenaHeight-this.height) this.y=ArenaHeight-this.height;
                     }
                     if(keycode == keys.LEFT) {
                     	this.x -= this.ySpeed;
@@ -62,7 +62,7 @@ var player = {
                     }
                     if(keycode == keys.RIGHT) {
                     	this.x += this.ySpeed;
-                        if(this.x>ArenaHeight-this.height) this.y=ArenaHeight-this.height;
+                        if(this.x>ArenaWidth-this.width) this.x=ArenaWidth-this.width;
                     }
                     if(keycode == keys.SPACE) {
                         //shoot

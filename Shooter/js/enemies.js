@@ -30,10 +30,10 @@ var enemies = {
         });
          this.remove();
     }
-    
 };
+
 //test
-function Enemy(x,y,speed){
+function Enemy(x,y,speed,movement){
     this.x = x;
     this.yOrigine = y;
     this.y = this.yOrigine;
@@ -93,7 +93,7 @@ function Enemy(x,y,speed){
     this.update = function(){
        if(this.cptExplosion==0){//is not exploding
             this.x +=   this.xSpeed ;
-            this.y = this.yOrigine+ ArenaHeight/4 * Math.sin(this.x / 100);
+            this.y = this.yOrigine+ movement(this.x);
             var tmp = this.collision([player]);
                 if(tmp != null){
                     tmp.explodes();

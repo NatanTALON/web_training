@@ -82,12 +82,19 @@ function updateItems() {
     "use strict"; 
     player.update();
     tics++;
-     if(tics % 100 == 1) {
+    if(tics % 100 == 1) {
         var rand = Math.floor(Math.random() * ArenaHeight);
-        enemies.add(new Enemy(ArenaWidth, rand,-2));
-    } else if (tics % 100 == 0) {
+        var movement = function(x) { return ArenaHeight/4 * Math.sin(x / 100) };
+        enemies.add(new Enemy(ArenaWidth, rand,-2, movement));
+    } else if (tics % 100 == 2) {
     	var rand = Math.floor(Math.random() * ArenaHeight);
-        enemies.add(new Enemy(ArenaWidth, rand,-3));
+    	var movement = function(x) { return ArenaHeight/4 * Math.sin(x / 100) };
+        enemies.add(new Enemy(ArenaWidth, rand,-3, movement));
+    } else if (tics % 100 == 0) {
+    	var rand1 = Math.floor(Math.random() * ArenaHeight);
+    	var rand2 = Math.floor(Math.random() * ArenaHeight);
+    	var movement = function(x) { return (rand1-rand2)/ArenaHeight * x + rand2; };
+        enemies.add(new Enemy(ArenaWidth, rand1,-3, movement));
     }
     enemies.update();
 }

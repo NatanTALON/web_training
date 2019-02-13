@@ -19,17 +19,28 @@
 		}
 		
 		function move() {
+			var date = new Date();
+			pausecomp(10);
+			var newDate = new Date();
 			//temporisation pour simuler du calcul
 			context.clearRect(pos, 10, 50, 50);
 			if (dir === 'droite') {
-				pos+=10;
+				pos+=newDate-date;
 				if (pos+100 >= 500) { dir = 'gauche' }
 			} else {
-				pos-=10;
+				pos-=newDate-date;
 				if (pos <= 0) { dir = 'droite' }
 			}
 			context.fillRect(pos, 10, 50, 50);
 			window.requestAnimationFrame(move);
+		}
+		
+		function pausecomp(millis) {
+			var date = new Date();
+			var curDate = null;
+			do { 
+				curDate = new Date(); 
+			} while(curDate-date < millis);
 		}
 		
     </script>
